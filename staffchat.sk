@@ -1,0 +1,22 @@
+command /staffchat:
+    aliases: /sc
+    permission: vspunisher.staffchat
+    permission message: &6&l(!) &cNo permission.
+
+    trigger:
+        if {staffchat.%player%} is not set:
+            set {staffchat.%player%} to false
+            
+        if {staffchat.%player%} is false:
+            set {staffchat.%player%} to true
+            send "&aStaff chat has been enabled." to player
+        else:
+            set {staffchat.%player%} to false
+            send "&cStaff chat has been disabled." to player
+
+on chat:
+    if {staffchat.%player%} is true:
+        cancel event
+        loop all players:
+            if loop-player has permission "vspunisher.staffchat":
+                send "&cStaff &f» &8%player's display name%&7&f: %message%" to loop-player

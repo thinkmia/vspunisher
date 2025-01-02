@@ -1,0 +1,162 @@
+command /vstroll:
+  aliases: /vst
+  permission: vspunisher.troll
+  permission message: &cNo permission.
+  trigger:
+    send "&6&l&m---------------------------------"
+    send " &e/vsop&a &f» &aSends a Fake OP message." to player
+    send " &e/vscrash&a &f» &aSends a Fake Invalid session kick." to player
+    send " &e/vslag&a &f» &aMakes player think they're lagging." to player
+    send " &e/vslaunch&a &f» &aLaunches the player up in the air." to player
+    send " &e/vsexplode&a &f» &aSpawns Fake TNT." to player
+    send " &e/vsloud&a &f» &aSends a loud sound to the player." to player
+    send " &e/vsapocalypse&a &f» &aSpawns 10 zombies around the player." to player
+    send " &e/vsfreeze&a &f»&a Freezes the player for 3 seconds." to player
+    send " &e/vsburn&a &f»&a Sets the player on fire." to player
+    send "&6&l&m---------------------------------"
+
+command /vsop <player>:
+  aliases: /fop
+  permission: vspunisher.troll
+  permission message: &cNo permission.
+  trigger:
+    send "&7&o[%player%: Made %arg 1% a server operator]" to arg 1
+    send "&c&l&cvsTroll &f» &6&lFAKE OP&a has been sent to&e %arg 1%." to player
+
+command /vscrash <player>:
+  aliases: /fcr
+  permission: vspunisher.troll
+  permission message: &cNo permission.
+  trigger:
+    message "&c&l&cvsTroll &f» &6&lFAKE CRASH&a has been sent to &e%arg 1%." to player
+    kick arg 1 due to "Failed to login: Invalid session (Try restarting your game)"
+
+command /vslaunch <player>:
+  permission: vspunisher.troll
+  permission message: &cNo permission.
+  trigger:
+    message "&c&l&cvsTroll &f» &aYou just &d&lLAUNCHED&e %arg 1%." to player
+    push arg 1 upwards with speed 50
+    wait 40 ticks
+    push arg 1 downwards with speed 25
+    wait 10 ticks
+    execute command "/effect give %arg 1% minecraft:slow_falling 2 1 true"
+
+command /vsexplode <player>:
+   aliases: /exp   
+   permission: vspunisher.troll
+   permission message: &cNo permission.
+   trigger:
+      message "&c&l&cvsTroll &f» &aYou just&c&l EXPLODED&e %arg 1%." to player
+      make arg 1 invincible
+      create a safe explosion with force 20 at arg 1
+      wait 20 ticks
+      make arg 1 vincible
+
+command /vslag <player>:  
+   aliases: /flag
+   permission: vspunisher.troll
+   permission message: &cNo permission.
+   trigger:
+      message "&c&l&cvsTroll &f» &e%arg 1% &ais now experiencing &b&lLAG." to player
+      loop 5 times:
+         wait 0.5 second
+         teleport arg 1 to arg 1
+      message "&c&l&cvsTroll &f» &e%arg 1% &aisn't experiencing &b&lLAG &r&aanymore." to player
+
+command /vsloud <player>:  
+   permission: vspunisher.troll
+   permission message: &cNo permission.
+   trigger:
+      message "&c&l&cvsTroll &f» &aA &d&lSUPER LOUD SOUND&a has been sent to &e%arg 1%." to player
+      play sound "entity.enderman.stare" to arg 1
+      wait 0.3 seconds
+      play sound "entity.ender_dragon.death" to arg 1
+      wait 0.3 seconds
+      play sound "block.anvil.land" to arg 1
+      wait 0.3 seconds
+      play sound "entity.enderman.scream" to arg 1
+
+command /vsapocalypse <player>:
+    aliases: /zombie
+    permission: vspunisher.troll
+    trigger:
+        message "&c&l&cvsTroll &f» &aA horde of &2&lZOMBIES&a has been sent to &e%arg 1%." to player
+        loop blocks in radius 4 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+        loop blocks in radius 2 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+        loop blocks in radius 2 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+        loop blocks in radius 2 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+        loop blocks in radius 2 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+        loop blocks in radius 2 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+        loop blocks in radius 2 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+        loop blocks in radius 2 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+        loop blocks in radius 2 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+        loop blocks in radius 2 around player:
+            if loop-block is air:
+                if block above loop-block is air:
+                    add loop-block's location to {_locs::*}
+        set {_loc} to random element of {_locs::*}
+        spawn a zombie at {_loc}
+
+command /vsfreeze <player>:
+  permission: vspunisher.troll
+  permission message: &cNo permission.
+  trigger:
+    message "&c&l&cvsTroll &f» &e%arg 1%&a has been &b&lFROZEN." to player
+    loop 30 times:
+      wait 0.1 seconds
+      teleport player to player
+    message "&c&l&cvsTroll &f» &e%arg 1%&a has been &b&lUNFROZEN." to player
+
+command /vsburn <player>:
+  permission: vspunisher.troll
+  permission message: &cNo permission.
+  trigger:
+    set arg 1 on fire
+    message "&cvsTroll &f»&c&l &e%arg 1%&a has been set on &6&lFIRE." to player
+ 

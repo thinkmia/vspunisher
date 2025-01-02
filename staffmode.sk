@@ -1,0 +1,111 @@
+command /staffmode:
+    aliases: /sm
+    permission: vspunisher.staffmode
+    trigger:
+        if player has permission "vspunisher.staffmode":
+            if {staff.%player%} is not set:
+                set {staff.%player%} to true
+                set {_count} to 0
+                loop 36 times:
+                    set {inv.%player%.%{_count}%} to slot {_count} of player's inventory
+                    add 1 to {_count}
+                set {inv.%player%.helmet} to player's helmet
+                set {inv.%player%.chestplate} to player's chestplate
+                set {inv.%player%.leggings} to player's leggings
+                set {inv.%player%.boots} to player's boots
+                execute player command "/vanish on"
+                clear player's inventory
+                set slot 0 of player to ice named "&c&lFREEZE"
+                set slot 1 of player to pumpkin named "&c&lSMITE"
+                set slot 2 of player to barrier named "&c&lPUNISH"
+                set slot 8 of player to arrow named "&c&lDAMAGE"
+                set slot 7 of player to bedrock named "&c&lJAIL 30M"
+                set slot 6 of player to torch named "&c&lNOTIFY STAFF"
+                send "&l&cStaff &r&f» &7Staffmode &a&lEnabled! &7you are now invisible to other players!"
+                loop all players:
+                    if loop-player has permission "vspunisher.adminchat":
+                        wait 40 ticks
+                        send "&4Staff &c» &8%player's display name%&7&f has &a&lEnabled &fstaffmode!" to loop-player
+                stop
+            delete {staff.%player%}
+            set {_count} to 0
+            loop 36 times:
+                set slot {_count} of player's inventory to {inv.%player%.%{_count}%}
+                add 1 to {_count}
+            set the helmet of player to {inv.%player%.helmet}
+            set the chestplate of player to {inv.%player%.chestplate}
+            set the leggings of player to {inv.%player%.leggings}
+            set the boots of player to {inv.%player%.boots}
+            execute player command "/vanish off"
+            send "&c&lStaff &r&f» &7Staffmode &c&lDisabled! &7you are no longer invisible to other players!"
+            loop all players:
+                if loop-player has permission "vspunisher.adminchat":
+                    wait 40 ticks
+                    send "&4Staff &c» &8%player's display name%&7&f has &c&lDisabled &fstaffmode!" to loop-player
+
+on right click on player:
+    if player has permission "vspunisher.staffmode":
+        if name of player's held item is "&c&lFREEZE":
+            if {freeze.%clicked entity%} is not set:
+                set {freeze.%clicked entity%} to true
+                send "&c&lStaff &r&f» &fYou have frozen %clicked entity%!" to player
+                send "&fYou have been frozen by &l&cStaff!" to clicked entity
+                stop
+            delete {freeze.%clicked entity%}
+            send "&c&lStaff &r&f» &fYou have unfrozen %clicked entity%!" to player
+            send "&fYou have been unfrozen by &l&cStaff!" to clicked entity
+
+on right click with pumpkin:
+    if player has permission "vspunisher.staffmode":
+        if name of player's held item is "&c&lSMITE":
+            if clicked entity is a player:
+                send "&c&lStaff &r&f» &fYou have smited %clicked entity%!" to player
+                execute player command "/smite %clicked entity%"
+            else:
+                send "&c&lStaff &r&f» Invalid player!" to player
+
+on right click with barrier:
+    if player has permission "vspunisher.staffmode":
+        if name of player's held item is "&c&lPUNISH":
+            if clicked entity is a player:
+                send "&c&lStaff &r&f» &fYou are punishing %clicked entity%!" to player
+                execute player command "/punish %clicked entity%"
+            else:
+                send "&c&lStaff &r&f» Invalid player!" to player
+
+on right click with bedrock:
+    if player has permission "vspunisher.staffmode":
+        if name of player's held item is "&c&lJAIL 30M":
+            if clicked entity is a player:
+                send "&c&lStaff &r&f» &fYou are jailing %clicked entity% for 30 minutes!" to player
+                execute player command "/jail %clicked entity% cozy_jail 30m"
+            else:
+                send "&c&lStaff &r&f» Invalid player!" to player
+
+on right click with arrow:
+    if player has permission "vspunisher.staffmode":
+        if name of player's held item is "&c&lDAMAGE":
+            if clicked entity is a player:
+                send "&c&lStaff &r&f» &fYou are damaging %clicked entity%!" to player
+                execute player command "/damage %clicked entity% 4 minecraft:arrow"
+            else:
+                send "&c&lStaff &r&f» Invalid player!" to player
+
+on right click with torch:
+    if player has permission "vspunisher.staffmode":
+        if name of player's held item is "&c&lNOTIFY STAFF":
+            if clicked entity is a player:
+                send "&c&lStaff &r&f» &fYou are notifying staff about %clicked entity%!" to player
+                loop all players:
+                    if loop-player has permission "vspunisher.staffchat":
+                        wait 40 ticks
+                        send "&l&4Staff Notify &f» &l&c%player's display name%&7&f is suspecting &l&8%clicked entity%&r for breaking the rules." to loop-player
+            else:
+                send "&c&lStaff &r&f» Invalid player!" to player
+
+
+on player move:
+    if {freeze.%player%} is true:
+        cancel event
+
+

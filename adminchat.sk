@@ -1,0 +1,22 @@
+command /adminchat:
+    aliases: /sca
+    permission: vspunisher.adminchat
+    permission message: &6&l(!) &cNo permission.
+
+    trigger:
+        if {adminchat.%player%} is not set:
+            set {adminchat.%player%} to false
+            
+        if {adminchat.%player%} is false:
+            set {adminchat.%player%} to true
+            send "&aAdmin chat has been enabled." to player
+        else:
+            set {adminchat.%player%} to false
+            send "&cAdmin chat has been disabled." to player
+
+on chat:
+    if {adminchat.%player%} is true:
+        cancel event
+        loop all players:
+            if loop-player has permission "vspunisher.adminchat":
+                send "&4Admin &c» &8%player's display name%&7&f: %message%" to loop-player

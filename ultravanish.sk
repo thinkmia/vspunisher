@@ -1,0 +1,13 @@
+command /ultravanish: 
+    aliases: /uv
+    permission: vspunisher.ultravanish
+    trigger:
+        if player has permission "vspunisher.ultravanish":
+            if {staff.%player%} is not set:
+                set {staff.%player%} to true
+                hide player from all players
+                send "&l&cOwner &r&f» &fOwner Vanish &a&lEnabled &fyou are now invisible to &leveryone!"
+                stop
+            delete {staff.%player%}
+            reveal player from all players
+            send "&l&cOwner &r&f» &fOwner Vanish &c&lDisabled &fyou are now visible to &leveryone!"

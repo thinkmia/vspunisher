@@ -1,0 +1,252 @@
+options:
+	silent: no
+	perm: vspunisher.punish 
+	
+# yes/no
+
+on inventory click:
+    if player's current inventory's name contains "&6Punish":
+        cancel event
+		
+command /punish [<offlineplayer>]:
+	aliases: p
+	usage: /punish [<offlineplayer>]
+	executable by: players
+	permission: {@perm}
+	trigger:
+		if arg-1 is "Help" or "help":
+			send "&6&l&m---------------------------------"
+			send "&6/p <player> &r&a- Open the GUI to take actions with the selected player!"
+			send "&6/p reload &r&a- Reloads the skript!"
+			send "&6&l&m---------------------------------"
+		else:
+			if arg-1 is "reload":
+				execute console command "sk reload punish.sk"
+				send "&c&lSkript Reloaded!"
+			else:
+				if arg-1 is "credits":
+					send "&6&l&m---------------------------------"
+					send "&cMade by vsdw!"
+					send "&cContact me on discord!"
+					send "&6&l&m---------------------------------"
+				else:
+					if arg-1 is not set:
+						send "&6&l&m---------------------------------"
+						send "&6/p <player> &r&a- Open the GUI to take actions with the selected player!"
+						send "&6/p reload &r&a- Reloads the skript!"
+						send "&6&l&m---------------------------------"
+					else:
+						if arg-1 is a offlineplayer:
+							set {_head} to arg-1's skull
+							set {player} to arg-1
+							set {_exc} to the command executor
+							set {_gui} to a new chest inventory with 5 row with name "&6Punish %arg-1%"
+							set slot 0,1,2,3,4,5,6,7,8,9,17,18,26,27,35,36,37,38,39,41,42,43,44 and 54 of {_gui} to black glass pane named "&f"
+							set slot 10 of {_gui} to red wool named "&4IP-Ban %arg-1%"
+							set slot 11 of {_gui} to red wool named "&4Temp-Ban %arg-1%" with lore "&77 Days"
+							set slot 12 of {_gui} to red wool named "&4Temp-Ban %arg-1%" with lore "&714 Days"
+							set slot 13 of {_gui} to red wool named "&4Temp-Ban %arg-1%" with lore "&721 Days"
+							set slot 14 of {_gui} to light green wool named "&bPerm-Mute %arg-1%"
+							set slot 15 of {_gui} to light green wool named "&bTemp-Mute %arg-1%" with lore "&77 Hours"
+							set slot 16 of {_gui} to light green wool named "&bTemp-Mute %arg-1%" with lore "&71 Hour"
+							set slot 19 of {_gui} to light green wool named "&bTemp-Mute %arg-1%" with lore "&712 Hours"
+							set slot 20 of {_gui} to light green wool named "&bTemp-Mute %arg-1%" with lore "&724 Hours"
+							set slot 21 of {_gui} to yellow wool named "&9Kick %arg-1%" with lore "&7Immediate rejoin"
+							set slot 22 of {_gui} to yellow wool named "&9Kick %arg-1%" with lore "&7No Reason"
+							set slot 23 of {_gui} to yellow wool named "&9Warn %arg-1%" with lore "&7Reason: Spamming"
+							set slot 24 of {_gui} to yellow wool named "&9Warn %arg-1%" with lore "&7Reason: Breaking the rules"
+							set slot 25 of {_gui} to yellow wool named "&9Warn %arg-1%" with lore "&7Reason: Swearing"
+							set slot 28 of {_gui} to {_head} named "&6&l%arg-1%" with lore "&7Alts: Click to check" and "&7Warns: %{warns::%arg-1's uuid%}%"
+							set slot 40 of {_gui} to paper named "&aMore actions" with lore "&7Click to open"
+							set slot 34 of {_gui} to barrier named "&4&lClose"
+							set slot 31 of {_gui} to green wool named "&cUnban %arg-1%"
+							open {_gui} to player
+						else:
+							send "&6Invalid Name"
+							
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 10:
+			cancel event
+			ip-ban {player}
+			kick {player}
+			if {@silent} = no:
+				broadcast "&4&lBANNED: &r&f%{player}% has been banned forever"
+			else:
+				send "&4You banned %{player}% for 7 days" to {_exc}
+				
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 11:
+			cancel event
+			ban {player} for 7 days
+			kick {player}
+			if {@silent} = no:
+				broadcast "&4&lBANNED: &r&f%{player}% has been banned for 7 Days"
+			else:
+				send "&4You banned %{player}% for 7 days" to {_exc}
+
+
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 12:
+			cancel event
+			ban {player} for 14 days
+			kick {player}
+			if {@silent} = no:
+				broadcast "&4&lBANNED: &r&f%{player}% has been banned for 14 days"
+			else:
+				send "&4You banned %{player}% for 14 days" to {_exc}
+				
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 13:
+			cancel event
+			ban {player} for 21 days
+			kick {player}
+			if {@silent} = no:
+				broadcast "&4&lBANNED: &r&f%{player}% has been banned for 21 days"
+			else:
+				send "&4You banned %{player}% for 21 days" to {_exc}
+				
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 14:
+			cancel event
+			execute player command "/mute %{player}%"
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 15:
+			cancel event
+			execute player command "/mute %{player}% 7d"
+				
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 16:
+			cancel event
+			execute player command "/mute %{player}% 3600"
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 19:
+			cancel event
+			execute player command "/mute %{player}% 43200"
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 20:
+			cancel event
+			execute player command "/mute %{player}% 86400"
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 21:
+			cancel event
+			kick {player} due to "Rejoin!"
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 22:
+			cancel event
+			kick {player} due to ""
+			set {kicked::%player%} to 5
+			
+every 1 minute in world "world":
+	loop all players:
+		if {kicked::%loop-player%} is greater than 0:
+			remove 1 from {kicked::%loop-player%}
+		else:
+			delete {kicked::%loop-player%}
+			
+on join:
+	if {kicked::%player%} is more than 0:
+		kick player
+		
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 23:
+			cancel event
+			execute player command "/warn %{player}%"
+			send "&4You have warned %{player}% for Spamming"
+			send "&7You have been warned for Spamming" to {player}
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 24:
+			cancel event
+			execute player command "/warn %{player}%"
+			send "&4You have warned %{player}% for Breaking the rules"
+			send "&7You have been warned for Breaking the rules" to {player}
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 25:
+			cancel event
+			execute player command "/warn %{player}%"
+			send "&4You have warned %{player}% for Swearing"
+			send "&7You have been warned for Swearing" to {player}
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 28:
+			cancel event
+			execute player command "/alts %{player}%"
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 34:
+			cancel event
+			close player's inventory
+
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 31:
+			cancel event
+			execute player command "/unbanip %{player}%"
+			execute player command "/unban %{player}%"			
+			
+on inventory click:
+	if player's current inventory's name contains "&6More":
+		if index of event-slot = 7:
+			cancel event
+			close player's inventory
+			
+on inventory click:
+	if player's current inventory's name contains "&6More":
+		if index of event-slot = 1:
+			cancel event
+			kill {player}
+			
+on inventory click:
+	if player's current inventory's name contains "&6More":
+		if index of event-slot = 3:
+			cancel event
+			strike lightning at {player}
+			
+on inventory click:
+	if player's current inventory's name contains "&6More":
+		if index of event-slot = 5:
+			cancel event
+			clear {player}'s inventory
+			send "&4&lCleared" to {_exc}
+			
+on inventory click:
+	if player's current inventory's name contains "&6Punish":
+		if index of event-slot = 40:
+			set {_pop} to a new chest inventory with 1 row with name "&6More actions"
+			set slot 0,2,4,6 and 8 of {_pop} to black glass pane named "&f"
+			set slot 1 of {_pop} to blue wool named "&5Kill %{player}%"
+			set slot 3 of {_pop} to blue wool named "&5Smite %{player}%"
+			set slot 5 of {_pop} to blue wool named "&5Clear %{player}%'s Inventory"
+			set slot 7 of {_pop} to barrier named "&4&lClose"
+			open {_pop} to player
+			
+on inventory click:
+	if player's current inventory's name contains "&6More":
+		cancel event
+		
+on first join:
+    add "%player%'s ip %player%" to {check::*}
+    add player to {players::*}
+			
